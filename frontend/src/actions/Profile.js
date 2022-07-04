@@ -5,7 +5,7 @@ import { setErrors } from "./Alert"
 
 export const updateProfile = (profileData) => async dispatch => {
     try {
-        const profile = await Axios.post(`http://localhost:5000/profile`, profileData);
+        const profile = await Axios.post(`/profile`, profileData);
         dispatch({
             type: UPDATE_PROFILE,
             payload: profile.data
@@ -19,7 +19,7 @@ export const updateProfile = (profileData) => async dispatch => {
 export const initiateGetProfile = (phone) => async dispatch => {
     try {
         setAuthHeader()
-        const profile = await Axios.get(`http://localhost:5000/profile`);
+        const profile = await Axios.get(`/profile`);
         dispatch({
             type: GET_PROFILE,
             payload: profile.data

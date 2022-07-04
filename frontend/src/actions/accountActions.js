@@ -13,7 +13,7 @@ export const updateAccount = (accountDetails) => async dispatch => {
 export const getAccountDetails = () => async (dispatch) => {
     try {
         setAuthHeader()
-        const accountDetails = await Axios.get('http://localhost:5000/account')
+        const accountDetails = await Axios.get('/account')
         dispatch({
             type : GET_ACCOUNT,
             payload: accountDetails.data
@@ -26,7 +26,7 @@ export const getAccountDetails = () => async (dispatch) => {
 export const addAccountDetails = (account_no, bank_name, bvn) => async (dispatch) => {
     try {
         setAuthHeader()
-        const account = await Axios.post('http://localhost:5000/account', {
+        const account = await Axios.post('/account', {
             account_no,
             bank_name,
             bvn
@@ -44,7 +44,7 @@ export const addAccountDetails = (account_no, bank_name, bvn) => async (dispatch
 export const updateAccountDetails = (bvn) => async (dispatch) => {
     try {
         setAuthHeader()
-        const accountDetails = await Axios.patch('http://localhost:5000/account', {
+        const accountDetails = await Axios.patch('/account', {
             bvn
         })
         dispatch({
