@@ -33,7 +33,7 @@ export const signIn = (user) => dispatch => {
 
 export const registerUser = (data) => async dispatch => {
     try {
-        await Axios.post(`http://localhost:5000/signup`, data)
+        await Axios.post(`signup`, data)
         dispatch(setSuccessMsg('User Registerd Successfully'))
         return { success: true}
     } catch (error) {
