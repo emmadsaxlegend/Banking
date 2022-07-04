@@ -1,0 +1,59 @@
+import Axios from 'axios'
+import { removeAuthHeader, setAuthHeader } from '../utils/Common'
+import { SIGN_IN, SIGN_OUT } from '../utils/Constant'
+import { setErrors, setSuccessMsg } from './Alert'
+import { initiateGetProfile } from './Profile'
+
+export const initiateLogin = (phone, password) => async dispatch => {
+    try {
+        const result = await Axios.post(`http://localhost:5000/signin`, {
+            phone,
+            password
+        })
+        const user = result.data
+        localStorage.setItem('user_token', user.token)
+
+        dispatch({
+            type: SIGN_IN,
+            payload: user
+        })
+        dispatch(initiateGetProfile(user.phone))
+    } catch (error) {
+        console.error(error)
+        dispatch(setErrors(error.response.data))
+    }
+}
+
+export const signIn = (user) => dispatch => {
+    dispatch({
+        type: SIGN_IN,
+        payload: user
+    })
+}
+
+export const registerUser = (data) => async dispatch => {
+    try {
+        await Axios.post(`http://localhost:5000/signup`, data)
+        dispatch(setSuccessMsg('User Registerd Successfully'))
+        return { success: true}
+    } catch (error) {
+        dispatch(setErrors(error.response.data))
+        return { success: false}
+    }
+}
+
+export const signOut = () => ({
+    type: SIGN_OUT
+})
+  
+export const logout = () => async (dispatch) => {
+        try {
+            setAuthHeader()
+            await Axios.post(`http://localhost:5000/logout`)
+            removeAuthHeader()
+            localStorage.removeItem('user_token')
+            return dispatch(signOut())
+        } catch (error) {
+            error.response && dispatch(setErrors(error.response.data))
+    }
+}
