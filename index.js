@@ -25,11 +25,11 @@ app.use(profileRoute)
 app.use(accountRoute)
 app.use(transactionRoute)
 
-app.use(express.static("public"));
-
-// app.get('', function(req, res){
-//     res.sendFile(path.join(__dirname + 'frontend/build/index.html'));
-// });
+//_____________serve react file _________________
+app.use(express.static(path.join(__dirname, 'frontend/build/index.html')));
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'frontend/build/index.html'));
+});
 
 const PORT = process.env.PORT || 5000
 
