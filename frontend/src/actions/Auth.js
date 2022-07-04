@@ -6,7 +6,7 @@ import { initiateGetProfile } from './Profile'
 
 export const initiateLogin = (phone, password) => async dispatch => {
     try {
-        const result = await Axios.post(`http://localhost:5000/signin`, {
+        const result = await Axios.post(`/signin`, {
             phone,
             password
         })
@@ -49,7 +49,7 @@ export const signOut = () => ({
 export const logout = () => async (dispatch) => {
         try {
             setAuthHeader()
-            await Axios.post(`http://localhost:5000/logout`)
+            await Axios.post(`/logout`)
             removeAuthHeader()
             localStorage.removeItem('user_token')
             return dispatch(signOut())
